@@ -31,10 +31,20 @@ io.on('connection', client =>{
         io.emit( 'mensaje', { admin: 'Nuevo mensaje' } );
     });
 
-    client.on('emitir-mensaje', ( payload ) => {
+    client.on('vote-band', (payload)=>{
+        //console.log(payload);
+        // esto realiza la votacion respectiva
+        bands.voteBand(payload.id);
+        //notifico a todos los que esta escuchando que hay un cambio
+        //en la info y hay que refrescarlo
+        //* io es el servidor, todos los clientes conectados esta alli
+        //* incluso mi propio voto 
+        io.emit('active-bands', bands.getBands());
+    });
+/*     client.on('emitir-mensaje', ( payload ) => {
         //console.log(payload);
         //io.emit( 'nuevo-mensaje', payload ); //emite a todos
         client.broadcast.emit( 'nuevo-mensaje', payload ); //emite a todos menos el que lo emitio
-    });
+    }); */
 });
 
