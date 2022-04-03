@@ -41,6 +41,17 @@ io.on('connection', client =>{
         //* incluso mi propio voto 
         io.emit('active-bands', bands.getBands());
     });
+    
+    // escuchar: 'add-band', Rx payload
+    client.on('add-band',(payload)=>{
+        const newBand = new Band(payload.name);
+        bands.addBand(newBand);
+        io.emit('active-bands', bands.getBands());
+    });
+
+
+
+
 /*     client.on('emitir-mensaje', ( payload ) => {
         //console.log(payload);
         //io.emit( 'nuevo-mensaje', payload ); //emite a todos
