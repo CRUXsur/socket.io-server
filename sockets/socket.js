@@ -39,17 +39,21 @@ io.on('connection', client =>{
         //en la info y hay que refrescarlo
         //* io es el servidor, todos los clientes conectados esta alli
         //* incluso mi propio voto 
-        io.emit('active-bands', bands.getBands());
+        io.emit('active-bands', bands.getBands());//notifico a todos
     });
     
     // escuchar: 'add-band', Rx payload
     client.on('add-band',(payload)=>{
         const newBand = new Band(payload.name);
         bands.addBand(newBand);
-        io.emit('active-bands', bands.getBands());
+        io.emit('active-bands', bands.getBands());//notifico a todos
     });
-
-
+    
+    // escuchar: 'delete-band', Rx payload
+    client.on('delete-band', (payload)=>{
+        bands.deleteBand(payload.id);
+        io.emit('active-bands', bands.getBands());//notifico a todos
+    });
 
 
 /*     client.on('emitir-mensaje', ( payload ) => {
