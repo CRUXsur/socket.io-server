@@ -49,6 +49,7 @@ io.on('connection', client =>{
         io.emit('active-bands', bands.getBands());//notifico a todos
     });
     
+    //
     // escuchar: 'delete-band', Rx payload
     client.on('delete-band', (payload)=>{
         bands.deleteBand(payload.id);
